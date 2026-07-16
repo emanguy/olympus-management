@@ -1,0 +1,6 @@
+- hosts: olympus-local
+  tasks:
+    - ansible.builtin.shell:
+        chdir: /root
+        cmd: touch success.txt
+
