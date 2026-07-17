@@ -11,12 +11,12 @@ Variables:
 Description={{ cron_description }}
 {% if cron_after is defined -%}
 After={{ cron_after }}
-{%- endif %}
+{% endif %}
 
 [Service]
 {% if cron_workdir is defined -%}
 WorkingDirectory={{ cron_workdir }}
-{%- endif %}
+{% endif %}
 ExecStart={{ cron_command }}
 Type=oneshot
 

@@ -2,5 +2,5 @@
   tasks:
     - ansible.builtin.shell:
         chdir: /root
-        cmd: touch success.txt
+        cmd: touch great-success.txt
 

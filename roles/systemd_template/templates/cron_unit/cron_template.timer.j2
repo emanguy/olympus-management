@@ -15,7 +15,7 @@ OnCalendar={{ cron_schedule }}
 Unit=cron-{{ cron_name }}.service
 {% if cron_persistent is defined -%}
 Persistent=true
-{%- endif %}
+{% endif %}
 
 [Install]
 WantedBy=timers.target
