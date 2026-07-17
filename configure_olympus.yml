@@ -1,4 +1,4 @@
-- hosts: olympus-local
+- hosts: olympus_local
   tasks:
     - ansible.builtin.shell:
         chdir: /root

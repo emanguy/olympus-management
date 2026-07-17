@@ -11,7 +11,7 @@ ungrouped:
           6635326537396531350a653466636661633361633633663064323738356562383431663662393265
           3333
 
-server-native:
+server_native:
   hosts:
-    olympus-local:
+    olympus_local:
       ansible_connection: local
