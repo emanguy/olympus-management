@@ -1,0 +1,28 @@
+# Create a cron unit and associated service unit in systemd and enable them
+# 
+# Variables:
+#   - cron_name: Name of the cron job (kebab case)
+#   - cron_description: Description for the cron job's service
+#   - cron_after (optional): "After" start ordering for created service
+#   - cron_command: The command to run for this cron job
+#   - cron_schedule: The schedule to run the cron job on
+#   - cron_persistent (optional): True if the job should be run at boot if the schedule was missed
+#   - cron_workdir (optional): The working directory for the job to run in
+
+- name: "{{ cron_name }} - Apply service file"
+  ansible.builtin.template:
+    src: cron_unit/cron_template.service.j2
+    dest: "/etc/systemd/system/cron-{{ cron_name }}.service"
+
+- name: "{{ cron_name }} - Apply timer file"
+  ansible.builtin.template:
+    src: cron_unit/cron_template.timer.j2
+    dest: "/etc/systemd/system/cron-{{ cron_name }}.timer"
+
+- name: "{{ cron_name }} - Start cron"
+  ansible.builtin.systemd_service:
+    name: "cron-{{ cron_name }}.timer"
+    state: started
+    enabled: true
+    daemon_reload: true
+

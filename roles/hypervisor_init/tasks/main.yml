@@ -1,7 +1,9 @@
-- name: Install ansible
+- name: Install necessary packages
   ansible.builtin.apt:
     update_cache: true
-    name: ansible
+    name: 
+      - ansible
+      - git
 
 - name: Populate password file
   ansible.builtin.copy:
@@ -10,3 +12,14 @@
     owner: root
     group: root
     mode: '0600'
+
+- name: Set up cron job to auto-run ansible jobs
+  ansible.builtin.include_role:
+    name: systemd_template
+    tasks_from: cron_unit
+  vars:
+    cron_name: ansible-config-pull
+    cron_description: Regularly pull ansible configuration from github and apply
+    cron_command: echo "Unit works"
+    cron_workdir: /var/ansible
+    cron_schedule: "*:0/10"

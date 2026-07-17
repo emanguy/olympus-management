@@ -1,0 +1,21 @@
+{#
+Timer file for a cron job
+
+Variables:
+  - cron_description: The description for the cron job.
+  - cron_schedule: The schedule the job should run at
+  - cron_persistent (optional): True if the job should be triggered on boot when the
+      schedule was missed.
+#}
+[Unit]
+Description={{ cron_description }}
+
+[Timer]
+OnCalendar={{ cron_schedule }}
+Unit=cron-{{ cron_name }}.service
+{% if cron_persistent is defined -%}
+Persistent=true
+{%- endif %}
+
+[Install]
+WantedBy=timers.target

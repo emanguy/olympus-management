@@ -1,0 +1,22 @@
+{#
+Service file for a systemd cron job
+
+Variables:
+  - cron_description: the description shown by systemd for the unit
+  - cron_after (optional): the unit to start the cron job after
+  - cron_command: the command to run in the cron job
+  - cron_workdir (optional): the working directory for the job to run in
+#}
+[Unit]
+Description={{ cron_description }}
+{% if cron_after is defined -%}
+After={{ cron_after }}
+{%- endif %}
+
+[Service]
+{% if cron_workdir is defined -%}
+WorkingDirectory={{ cron_workdir }}
+{%- endif %}
+ExecStart={{ cron_command }}
+Type=oneshot
+
