@@ -13,10 +13,22 @@
     group: root
     mode: '0600'
 
+- name: Create ZFS dataset to host management repo
+  community.general.zfs:
+    name: main-storage/management
+    state: present
+    extra_zfs_properties:
+      refquota: 1G
+
+- name: Remove the old management repo
+  ansible.builtin.file:
+    path: /var/ansible
+    state: absent
+
 - name: Clone this repo to hypervisor
   ansible.builtin.git:
     repo: "https://github.com/emanguy/olympus-management.git"
-    dest: /var/ansible
+    dest: /main-storage/management/
     version: main
 
 - name: Set up cron job to auto-run ansible jobs
@@ -27,5 +39,5 @@
     cron_name: ansible-config-pull
     cron_description: Regularly pull ansible configuration from github and apply
     cron_command: /bin/bash -c "git pull && ansible-playbook configure_olympus.yml"
-    cron_workdir: /var/ansible
+    cron_workdir: /main-storage/management/
     cron_schedule: "*:0/10"
