@@ -38,6 +38,6 @@
   vars:
     cron_name: ansible-config-pull
     cron_description: Regularly pull ansible configuration from github and apply
-    cron_command: /bin/bash -c "git pull && ansible-playbook configure_olympus.yml"
+    cron_command: /main-storage/management/conditionally-cron.sh
     cron_workdir: /main-storage/management/
     cron_schedule: "*:0/10"

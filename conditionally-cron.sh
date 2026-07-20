@@ -12,8 +12,7 @@ if [[ "$CURRENT_COMMIT" = "$LAST_COMMIT" ]]; then
   exit 0
 fi
 
-# ansible-playbook configure_olympus.yml
-echo "Here is where we would do the change"
+ansible-playbook configure_olympus.yml
 if [[ $? -ne 0 ]]; then
   echo "Failed to apply changes. Exiting."
   exit 1
