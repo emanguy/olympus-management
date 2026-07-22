@@ -4,3 +4,7 @@
         chdir: /root
         cmd: touch great-success.txt
 
+- hosts: olympus_local:
+  roles:
+    - hypervisor
+
