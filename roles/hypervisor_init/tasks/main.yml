@@ -10,7 +10,7 @@
   ansible.builtin.apt:
     name:
       - python3-proxmoxer
-      - pythen3-requests
+      - python3-requests
     state: absent
 
 - name: Create ansible virtual environment
@@ -18,6 +18,7 @@
     name:
       - proxmoxer>=2.3
       - requests
+      - lxc
     virtualenv: /opt/ansible-venv
     virtualenv_command: python3 -m venv
 

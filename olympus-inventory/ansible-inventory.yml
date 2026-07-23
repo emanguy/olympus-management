@@ -15,3 +15,9 @@ server_native:
   hosts:
     olympus_local:
       ansible_connection: local
+
+server_vm:
+  hosts:
+    windmill:
+      ansible_connection: community.general.lxc
+      ansible_lxc_host: "110"

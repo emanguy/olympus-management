@@ -15,3 +15,9 @@
   roles:
     - hypervisor
 
+- hosts: windmill
+  tasks:
+    - name: "Create test file"
+      ansible.builtin.command:
+        chdir: /root
+        cmd: touch lxc-success.txt
