@@ -42,6 +42,11 @@
     dest: /main-storage/management/
     version: main
 
+- name: Install required ansible collections
+  ansible.builtin.shell:
+    chdir: /main-storage/management/
+    cmd: ansible-galaxy collection install -r requirements.yml
+
 - name: Set up cron job to auto-run ansible jobs
   ansible.builtin.include_role:
     name: systemd_template
