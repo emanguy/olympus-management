@@ -17,7 +17,6 @@
 - name: Fetch fedora image into storage
   community.proxmox.proxmox_template:
     node: olympus
-    content_type: vztmpl
     storage: vm-templates-test
-    src: fedora-44-default_20260713_amd64.tar.xz
+    template: fedora-44-default_20260713_amd64.tar.xz
 
