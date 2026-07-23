@@ -5,6 +5,7 @@
       - ansible
       - git
       - python3-virtualenv
+      - python3-paramiko
 
 - name: Remove previous packages
   ansible.builtin.apt:
@@ -19,7 +20,6 @@
     name:
       - proxmoxer>=2.3
       - requests
-      - paramiko
     virtualenv: /opt/ansible-venv
     virtualenv_command: /usr/bin/virtualenv
 
