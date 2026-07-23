@@ -4,6 +4,8 @@
     name: 
       - ansible
       - git
+      - python3-proxmoxer
+      - python3-requests
 
 - name: Populate password file
   ansible.builtin.copy:
@@ -19,11 +21,6 @@
     state: present
     extra_zfs_properties:
       refquota: 1G
-
-- name: Remove the old management repo
-  ansible.builtin.file:
-    path: /var/ansible
-    state: absent
 
 - name: Clone this repo to hypervisor
   ansible.builtin.git:
