@@ -18,5 +18,5 @@
   community.proxmox.proxmox_template:
     node: olympus
     storage: vm-templates
-    template: fedora-44-default_20260713_amd64.tar.xz
+    template: ubuntu-26.04-standard_26.04-1_amd64.tar.zst
 
