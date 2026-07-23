@@ -1,22 +1,22 @@
 - name: Create ZFS dataset to hold VM templates
   community.general.zfs:
-    name: main-storage/vm-templates-test
+    name: main-storage/vm-templates
     state: present
 
 - name: Create folder storage for VM templates
   community.proxmox.proxmox_storage:
     nodes:
       - olympus
-    name: vm-templates-test
+    name: vm-templates
     type: dir
     content:
       - vztmpl
     dir_options:
-      path: /main-storage/vm-templates-test
+      path: /main-storage/vm-templates
 
 - name: Fetch fedora image into storage
   community.proxmox.proxmox_template:
     node: olympus
-    storage: vm-templates-test
+    storage: vm-templates
     template: fedora-44-default_20260713_amd64.tar.xz
 
