@@ -4,6 +4,9 @@
     api_user: "{{ proxmox_user }}"
     api_token_id: "{{ proxmox_token_id }}"
     api_token_secret: "{{ proxmox_api_key }}"
+
+    node: olympus
+    type: lxc
   register: current_vms
 
 - name: Print VM result
