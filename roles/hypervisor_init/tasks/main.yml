@@ -4,8 +4,22 @@
     name: 
       - ansible
       - git
+      - python3-venv
+
+- name: Remove previous packages
+  ansible.builtin.apt:
+    name:
       - python3-proxmoxer
-      - python3-requests
+      - pythen3-requests
+    state: absent
+
+- name: Create ansible virtual environment
+  ansible.builtin.pip:
+    name:
+      - proxmoxer>=2.3
+      - requests
+    virtualenv: /opt/ansible-venv
+    virtualenv_command: python3 -m venv
 
 - name: Populate password file
   ansible.builtin.copy:
