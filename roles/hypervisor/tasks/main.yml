@@ -7,8 +7,8 @@
 
     node: olympus
     type: lxc
-  register: current_vms
+  register: vm_info
 
 - name: Print VM result
   ansible.builtin.debug:
-    var: current_vms
+    var: vm_info.proxmox_vms
