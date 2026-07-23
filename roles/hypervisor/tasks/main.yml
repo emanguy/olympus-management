@@ -1,22 +1,47 @@
-- name: Create ZFS dataset to hold VM templates
-  community.general.zfs:
-    name: main-storage/vm-templates-test
-    state: present
+# - name: Create ZFS dataset to hold VM templates
+#   community.general.zfs:
+#     name: main-storage/vm-templates-test
+#     state: present
+#
+# - name: Create folder storage for VM templates
+#   community.proxmox.proxmox_storage:
+#     api_host: "{{ proxmox_api_host }}"
+#     api_user: "{{ proxmox_user }}"
+#     api_token_id: "{{ proxmox_token_id }}"
+#     api_token_secret: "{{ proxmox_api_key }}"
+#
+#     nodes:
+#       - olympus
+#     name: vm-templates-test
+#     type: dir
+#     content:
+#       - vztmpl
+#     dir_options:
+#       path: /main-storage/vm-templates-test
+#
+# - name: Fetch fedora image into storage
+#   community.proxmox.proxmox_template:
+#     api_host: "{{ proxmox_api_host }}"
+#     api_user: "{{ proxmox_user }}"
+#     api_token_id: "{{ proxmox_token_id }}"
+#     api_token_secret: "{{ proxmox_api_key }}"
 
-- name: Create folder storage for VM templates
-  community.proxmox.proxmox_storage:
-    nodes:
-      - olympus
-    name: vm-templates-test
-    type: dir
-    content:
-      - vztmpl
-    dir_options:
-      path: /main-storage/vm-templates-test
-
-- name: Fetch fedora image into storage
-  community.proxmox.proxmox_template:
+    
+- name: List existing VMs
+  community.proxmox.proxmox_vm_info:
     node: olympus
-    storage: vm-templates-test
-    name: fedora-44-default_20260713_amd64.tar.xz
+    type: lxc
+  register: vm_info
 
+- name: List existing storage
+  community.proxmox.proxmox_storage_info: {}
+  register: storage_info
+    
+
+- name: Print VM result
+  ansible.builtin.debug:
+    var: vm_info.proxmox_vms
+
+- name: Print storage result
+  ansible.builtin.debug:
+    var: storage_info.proxmox_storages
