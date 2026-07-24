@@ -1,0 +1,14 @@
+- hosts: localhost
+  connection: local
+  tasks:
+    - name: Import necessary variables
+      ansible.builtin.include_vars:
+        file: ./group_vars/server_vm/postgres.yml
+    - name: Create debug dir
+      ansible.builtin.file:
+        name: debug_output
+        state: directory
+    - name: Check template output
+      ansible.builtin.template:
+        src: ./roles/postgres_db/templates/pg_hba.conf.j2
+        dest: ./debug_output/pg_hba.conf

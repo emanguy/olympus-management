@@ -15,6 +15,10 @@
   roles:
     - hypervisor
 
+- hosts: postgres
+  roles:
+    - postgres_db
+
 - hosts: windmill
   tasks:
     - name: "Create test file"
