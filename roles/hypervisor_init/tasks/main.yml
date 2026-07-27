@@ -22,12 +22,26 @@
       - requests
     virtualenv: /opt/ansible-venv
     virtualenv_command: /usr/bin/virtualenv
+    virtualenv_site_packages: true
 
 
 - name: Populate password file
   ansible.builtin.copy:
     src: ~/.ansible-pass
     dest: /root/.ansible-pass
+    owner: root
+    group: root
+    mode: '0600'
+
+- name: Create rclone config dir
+  ansible.builtin.file:
+    path: /root/.config/rclone
+    state: directory
+
+- name: Copy rclone backup config
+  ansible.builtin.copy:
+    src: ~/.config/rclone/rclone.conf
+    dest: /root/.config/rclone/rclone.conf
     owner: root
     group: root
     mode: '0600'

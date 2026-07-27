@@ -41,4 +41,5 @@
     update_cache: true
     name:
       - rclone
+      - resticprofile
 
