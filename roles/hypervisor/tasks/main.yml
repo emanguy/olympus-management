@@ -43,3 +43,21 @@
       - rclone
       - resticprofile
 
+- name: Create directory for restic config
+  ansible.builtin.file:
+    path: /opt/backup
+    state: directory
+    
+- name: Copy restic backup configuration
+  ansible.builtin.copy:
+    src: profiles.toml
+    dest: /opt/backup/profiles.toml
+    owner: root
+    group: root
+
+- name: Initialize restic if it hasn't been initialized already
+  ansible.builtin.command:
+    creates: /opt/backup/.restic_initialized
+    chdir: /opt/backup/
+    cmd: resticprofile init && touch .restic_initialized
+

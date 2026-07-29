@@ -33,6 +33,14 @@
     group: root
     mode: '0600'
 
+- name: Populate backup password file
+  ansible.builtin.copy:
+    src: ~/.server-backup-pass
+    dest: /root/.server-backup-pass
+    owner: root
+    group: root
+    mode: '0600'
+
 - name: Create rclone config dir
   ansible.builtin.file:
     path: /root/.config/rclone

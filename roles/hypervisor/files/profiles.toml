@@ -1,0 +1,36 @@
+version = "1"
+global.scheduler = "systemd"
+
+[default]
+repository = "rclone:proton-drive:Olympus-Backup"
+password-file = "/root/.server-backup-pass"
+compression = "max"
+
+[default.backup]
+verbose = true
+source = [ 
+  # Immich raw images and videos
+  "/main-storage/subvol-103-disk-1/upload",
+  # Nextcloud documents & user data
+  "/main-storage/subvol-109-disk-1/data"
+]
+tag = "scheduled"
+
+schedule = "01:00"
+schedule-permission = "user"
+
+iexclude = [
+  "*.log",
+  "*.log.*",
+  "*.html"
+]
+
+[default.forget]
+prune = true
+keep-daily = 14
+keep-monthly = 12
+tag = "scheduled"
+
+schedule = "13:00"
+schedule-permission = "user"
+schedule-lock-wait = "1h"
