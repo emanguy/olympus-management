@@ -56,7 +56,7 @@
     group: root
 
 - name: Initialize restic if it hasn't been initialized already
-  ansible.builtin.command:
+  ansible.builtin.shell:
     creates: /opt/backup/.restic_initialized
     chdir: /opt/backup/
     cmd: resticprofile init && touch .restic_initialized
