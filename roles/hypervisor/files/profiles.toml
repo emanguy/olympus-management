@@ -16,7 +16,7 @@ source = [
 ]
 tag = "scheduled"
 
-schedule = "01:00"
+schedule = "Sun,Tue,Thu,Sat 01:00"
 schedule-permission = "user"
 
 iexclude = [
@@ -31,6 +31,5 @@ keep-daily = 14
 keep-monthly = 12
 tag = "scheduled"
 
-schedule = "13:00"
+schedule = "Mon,Wed,Fri 01:00"
 schedule-permission = "user"
-schedule-lock-wait = "1h"

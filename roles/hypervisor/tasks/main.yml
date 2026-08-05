@@ -61,3 +61,8 @@
     chdir: /opt/backup/
     cmd: resticprofile init && touch .restic_initialized
 
+- name: Enable scheduled backups
+  ansible.builtin.shell:
+    creates: /opt/backup/.restic_scheduled
+    chdir: /opt/backup
+    cmd: resticprofile schedule && touch .restic_scheduled
