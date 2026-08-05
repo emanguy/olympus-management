@@ -12,7 +12,9 @@ source = [
   # Immich raw images and videos
   "/main-storage/subvol-103-disk-1/upload",
   # Nextcloud documents & user data
-  "/main-storage/subvol-109-disk-1/data"
+  "/main-storage/subvol-109-disk-1/data",
+  # Foundry VTT data
+  "/main-storage/shared-drives/bind-mounts/foundrydata"
 ]
 tag = "scheduled"
 
