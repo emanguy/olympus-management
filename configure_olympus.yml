@@ -19,9 +19,14 @@
   roles:
     - postgres_db
 
-- name: Run mealie playbook
-  ansible.builtin.import_playbook: playbooks/docker/mealie.yml
-
+- hosts: docker
+  tasks:
+    - name: Set up mealie server
+      ansible.builtin.include_role:
+        name: docker
+        tasks_from: mealie
+        
+    
 - hosts: windmill
   tasks:
     - name: "Create test file"

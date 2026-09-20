@@ -1,0 +1,10 @@
+- name: "Create folder for mealie"
+  ansible.builtin.file:
+    path: /root/mealie_compose
+    state: directory
+
+- name: "Copy in mealie docker compose file"
+  ansible.builtin.template:
+    src: mealie/docker-compose.yml.j2
+    dest: /root/mealie_compose/docker-compose.yml
+
