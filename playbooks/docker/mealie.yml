@@ -8,6 +8,6 @@
 
     - name: "Copy in mealie docker compose file"
       ansible.builtin.template:
-        src: mealie/docker_compose.yml.j2
-        dest: /root/mealie_compose/docker_compose.yml
+        src: mealie/docker-compose.yml.j2
+        dest: /root/mealie_compose/docker-compose.yml
 
