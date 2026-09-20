@@ -8,6 +8,12 @@
   notify:
     - Restart postgres
 
+- name: Add required python dep
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - python3-psycopg2
+
 - name: Create mealie user
   community.postgresql.postgresql_user:
     name: mealie
