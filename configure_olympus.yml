@@ -19,6 +19,9 @@
   roles:
     - postgres_db
 
+- name: Run mealie playbook
+  ansilble.builtin.import_playbook: playbooks/docker/mealie.yml
+
 - hosts: windmill
   tasks:
     - name: "Create test file"

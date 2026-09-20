@@ -1,0 +1,9 @@
+servers:
+  mealie:
+    hostname: recipes.evanrittenhou.se
+    internal_hostname: docker.olympuslan.local
+    vm_port: 9925
+  postgres:
+    internal_hostname: pg.olympuslan.local
+    vm_port: 5432
+
