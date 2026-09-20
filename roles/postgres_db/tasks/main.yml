@@ -7,3 +7,21 @@
     mode: "0640"
   notify:
     - Restart postgres
+
+- name: Create mealie user
+  community.postgresql.postgresql_user:
+    name: mealie
+    password: '{{ postgres_users.mealie.password }}'
+    login_user: emanguy
+    login_password: '{{ postgres_users.emanguy.password }}'
+    login_host: 127.0.0.1
+    login_db: postgres
+
+- name: Create mealie db
+  community.postgresql.postgresql_db:
+    name: mealie
+    owner: mealie
+    login_user: emanguy
+    login_password: '{{ postgres_users.emanguy.password }}'
+    login_host: 127.0.0.1
+    maintenance_db: postgres
