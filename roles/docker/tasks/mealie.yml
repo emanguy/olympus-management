@@ -8,3 +8,8 @@
     src: mealie/docker-compose.yml.j2
     dest: /root/mealie_compose/docker-compose.yml
 
+- name: "Start compose stack"
+  community.docker.docker_compose_v2:
+    project_src: /root/mealie_compose
+    state: present
+
