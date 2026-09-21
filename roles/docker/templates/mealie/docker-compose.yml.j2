@@ -27,6 +27,7 @@ services:
       POSTGRES_DB: mealie
       OIDC_AUTH_ENABLED: "true"
       OIDC_CONFIGURATION_URL: https://{{ servers.auth.hostname }}/application/o/mealie/.well-known/openid-configuration
+      OIDC_REQUIRES_EMAIL_VERIFICATION: "false"
       OIDC_CLIENT_ID: VtPhSBPCqVSFDpFcnhlKJUg9dzeJGYslfpkWuiNb
       OIDC_CLIENT_SECRET: {{ servers.mealie.oidc_secret }}
       OIDC_USER_GROUP: "Recipe Users"
