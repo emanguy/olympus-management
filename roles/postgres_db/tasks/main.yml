@@ -32,4 +32,5 @@
     login_host: 127.0.0.1
     maintenance_db: postgres
     encoding: UTF-8
+    template: template0
 
