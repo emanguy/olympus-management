@@ -25,6 +25,14 @@ services:
       POSTGRES_SERVER: {{ servers.postgres.internal_hostname }}
       POSTGRES_PORT: {{ servers.postgres.vm_port }}
       POSTGRES_DB: mealie
+      OIDC_AUTH_ENABLED: "true"
+      OIDC_CONFIGURATION_URL: https://{{ servers.auth.hostname }}/application/o/mealie/.well-known/openid-configuration
+      OIDC_CLIENT_ID: VtPhSBPCqVSFDpFcnhlKJUg9dzeJGYslfpkWuiNb
+      OIDC_CLIENT_SECRET: {{ servers.mealie.oidc_secret }}
+      OIDC_USER_GROUP: "Recipe Users"
+      OIDC_ADMIN_GROUP: "Recipe Admins"
+      OIDC_PROVIDER_NAME: "Olympus Auth"
+      OIDC_REMEMBER_ME: "true"
 
 volumes:
   mealie-data:
