@@ -31,3 +31,5 @@
     login_password: '{{ postgres_users.emanguy.password }}'
     login_host: 127.0.0.1
     maintenance_db: postgres
+    encoding: UTF-8
+
