@@ -14,7 +14,9 @@ source = [
   # Nextcloud documents & user data
   "/main-storage/subvol-109-disk-1/data",
   # Foundry VTT data
-  "/main-storage/shared-drives/bind-mounts/foundrydata"
+  "/main-storage/shared-drives/bind-mounts/foundrydata",
+  # Postgres DB backups
+  "/main-storage/subvol-104-disk-0/backups/postgres"
 ]
 tag = "scheduled"
 

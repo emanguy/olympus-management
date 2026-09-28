@@ -54,6 +54,8 @@
     dest: /opt/backup/profiles.toml
     owner: root
     group: root
+  notify:
+    - Reschedule restic
 
 - name: Initialize restic if it hasn't been initialized already
   ansible.builtin.shell:

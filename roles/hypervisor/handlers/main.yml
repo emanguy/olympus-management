@@ -1,0 +1,4 @@
+- name: Reschedule restic
+  ansible.builtin.file:
+    path: /opt/backup/.restic_scheduled
+    state: absent

@@ -1,13 +1,3 @@
-- name: Update IP access file
-  ansible.builtin.template:
-    src: pg_hba.conf.j2
-    dest: /etc/postgresql/17/main/pg_hba.conf
-    owner: postgres
-    group: postgres
-    mode: "0640"
-  notify:
-    - Restart postgres
-
 - name: Add required python dep
   ansible.builtin.apt:
     update_cache: true
@@ -33,4 +23,46 @@
     maintenance_db: postgres
     encoding: UTF-8
     template: template0
+
+- name: Update IP access file
+  ansible.builtin.template:
+    src: pg_hba.conf.j2
+    dest: /etc/postgresql/17/main/pg_hba.conf
+    owner: postgres
+    group: postgres
+    mode: "0640"
+  notify:
+    - Restart postgres
+
+- name: Create backup directory
+  ansible.builtin.file:
+    path: /backups/postgres
+    state: directory
+
+- name: Create folder for backup script
+  ansible.builtin.file:
+    path: /opt/pg-backup
+    state: directory
+
+- name: Copy in backup script
+  ansible.builtin.copy:
+    src: perform-backup.sh
+    dest: /opt/pg-backup/perform-backup.sh
+    mode: "700"
+
+- name: Apply pgpass file
+  ansible.builtin.template:
+    src: .pgpass.j2
+    dest: /root/.pgpass
+
+- name: Create cron job to back up DB
+  include_role:
+    name: systemd_template
+    tasks_from: cron_unit
+  vars:
+    cron_name: backup-postgres
+    cron_description: Generate regular backups of the postgres DB to be pulled in with Restic
+    cron_command: /opt/pg-backup/perform-backup.sh
+    cron_schedule: "Sun,Tue,Thu,Sat 00:00"
+    cron_persistent: true
 
