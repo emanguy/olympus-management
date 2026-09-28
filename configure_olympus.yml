@@ -1,10 +1,4 @@
 - hosts: olympus_local
-  tasks:
-    - ansible.builtin.shell:
-        chdir: /root
-        cmd: touch great-success.txt
-
-- hosts: olympus_local
   module_defaults:
     group/community.proxmox.proxmox:
       api_host: "{{ proxmox_api_host }}"
