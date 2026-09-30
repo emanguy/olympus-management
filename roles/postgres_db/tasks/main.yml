@@ -54,6 +54,7 @@
   ansible.builtin.template:
     src: .pgpass.j2
     dest: /root/.pgpass
+    mode: "600"
 
 - name: Create cron job to back up DB
   include_role:
