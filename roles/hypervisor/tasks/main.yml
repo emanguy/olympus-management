@@ -73,6 +73,7 @@
   ansible.builtin.include_role:
     name: proxmox_ent
     tasks_from: lxc
+    defaults_from: lxc
   vars:
     proxmox_container_id: 113
     proxmox_container_hostname: hass

@@ -12,29 +12,6 @@
 # - proxmox_container_cpu_cores (optional): Number of CPU cores available to the container (default 1)
 # - proxmox_container_extra_params (optional): Dictionary of additional proxmox module parameters which override defaults
 
-lxc_interfaces:
-  net0: "name=eth0,bridge=vmbr0,firewall=1,ip=dhcp,tag=2"
-  net1: "name=internal0,bridge=vmbr1,firewall=1,ip=dhcp"
-proxmox_container_networking: {}
-proxmox_container_extra_params: {}
-lxc_defaults:
-    vmid: "{{ proxmox_container_id }}"
-    node: olympus
-    password: "{{ proxmox_container_password }}"
-    hostname: "{{ proxmox_container_hostname }}"
-    state: started
-    ostemplate: '{{ "vm-templates:vztmpl/%s" | format(proxmox_container_os_image | default("ubuntu-26.04-standard_26.04-1_amd64.tar.zst")) }}'
-    disk: '{{ "vm-disks:%s" | format(proxmox_container_disksize_gb | default("8")) }}'
-    memory: '{{ proxmox_container_memory_mb | default(1024) }}'
-    swap: '{{ proxmox_container_swap_mb | default((proxmox_container_memory_mb / 2) | default(512)) }}'
-    features:
-      - nesting=1
-    netif: '{{ lxc_interfaces | combine(proxmox_container_networking) }}'
-    onboot: true
-    cores: '{{ proxmox_container_cpu_cores | default(1) }}'
-    startup:
-      - order=350
-
 - name: "LXC with ID {{ proxmox_container_id }}"
   community.proxmox.proxmox: '{{ lxc_defaults | combine(proxmox_container_extra_params) }}'
 
