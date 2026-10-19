@@ -1,3 +1,5 @@
+##### Dependency setup #####
+
 - name: Create ZFS dataset to hold VM templates
   community.general.zfs:
     name: main-storage/vm-templates
@@ -14,7 +16,7 @@
     dir_options:
       path: /main-storage/vm-templates
 
-- name: Fetch fedora image into storage
+- name: Fetch ubuntu image into storage
   community.proxmox.proxmox_template:
     node: olympus
     storage: vm-templates
@@ -43,6 +45,8 @@
       - rclone
       - resticprofile
 
+####### Set up automated backups ########
+
 - name: Create directory for restic config
   ansible.builtin.file:
     path: /opt/backup
@@ -62,4 +66,21 @@
     creates: /opt/backup/.restic_initialized
     chdir: /opt/backup/
     cmd: resticprofile init && touch .restic_initialized
+
+####### Initialize LXCs #########
+
+- name: Create Home Assistant LXC
+  ansible.builtin.include_role:
+    name: proxmox_ent
+    tasks_from: lxc
+  vars:
+    proxmox_container_id: 113
+    proxmox_container_hostname: hass
+    proxmox_container_disksize_gb: 10
+    proxmox_container_cpu_cores: 2
+    proxmox_container_networking:
+      net2: "name=iot0,bridge=vmbr0,firewall=1,ip=dhcp,tag=3"
+      net3: "name=priv0,bridge=vmbr0,firewall=1,ip=dhcp"
+
+
 

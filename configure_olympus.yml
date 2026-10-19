@@ -3,8 +3,7 @@
     group/community.proxmox.proxmox:
       api_host: "{{ proxmox_api_host }}"
       api_user: "{{ proxmox_user }}"
-      api_token_id: "{{ proxmox_token_id }}"
-      api_token_secret: "{{ proxmox_api_key }}"
+      api_password: "{{ proxmox_api_password }}"
       validate_certs: false
   roles:
     - hypervisor
