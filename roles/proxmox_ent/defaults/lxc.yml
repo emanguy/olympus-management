@@ -24,5 +24,6 @@ lxc_defaults:
     netif: '{{ lxc_interfaces | combine(proxmox_container_networking) }}'
     onboot: true
     cores: '{{ proxmox_container_cpu_cores }}'
+    cmode: shell
     startup:
       - "order=350"
