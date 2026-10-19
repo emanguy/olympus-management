@@ -18,6 +18,7 @@ lxc_defaults:
     disk: '{{ "vm-disks:%s" | format(proxmox_container_disksize_gb | default("8")) }}'
     memory: '{{ proxmox_container_memory_mb  }}'
     swap: '{{ proxmox_container_swap_mb }}'
+    nameserver: "10.0.0.1"
     features:
       - nesting=1
     netif: '{{ lxc_interfaces | combine(proxmox_container_networking) }}'
