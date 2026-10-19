@@ -5,6 +5,7 @@
 # - proxmox_container_id: The numeric ID of the created LXC
 # - proxmox_container_hostname: The hostname of the created LXC
 # - proxmox_container_os_image (optional): The name of the OS template in the vm-templates pool
+# - proxmox_target_state (optional): The final desired state of the container (default "started")
 # - proxmox_container_disksize_gb (optional): The size of the OS disk in GB (default 8)
 # - proxmox_container_memory_mb (optional): Total memory available to the container in MB (default 1024)
 # - proxmox_container_swap_mb (optional): Total swap available to the container in MB (default 50% of provided memory)
@@ -14,6 +15,12 @@
 
 - name: "LXC with ID {{ proxmox_container_id }}"
   community.proxmox.proxmox: '{{ lxc_defaults | combine(proxmox_container_extra_params) }}'
+
+- name: "Start LXC {{ proxmox_container_id }}"
+  community.proxmox.proxmox:
+    vmid: "{{ proxmox_container_id }}"
+    node: olympus
+    state: "{{ proxmox_target_state }}"
 
 
 
