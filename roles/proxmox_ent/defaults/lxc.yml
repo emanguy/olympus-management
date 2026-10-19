@@ -4,6 +4,9 @@ lxc_interfaces:
 
 proxmox_container_networking: {}
 proxmox_container_extra_params: {}
+proxmox_container_memory_mb: 1024
+proxmox_container_swap_mb: '{{ proxmox_container_memory_mb / 2 }}'
+proxmox_container_cpu_cores: 1
 
 lxc_defaults:
     vmid: "{{ proxmox_container_id }}"
@@ -13,12 +16,12 @@ lxc_defaults:
     state: started
     ostemplate: '{{ "vm-templates:vztmpl/%s" | format(proxmox_container_os_image | default("ubuntu-26.04-standard_26.04-1_amd64.tar.zst")) }}'
     disk: '{{ "vm-disks:%s" | format(proxmox_container_disksize_gb | default("8")) }}'
-    memory: '{{ proxmox_container_memory_mb | default(1024) }}'
-    swap: '{{ proxmox_container_swap_mb | default((proxmox_container_memory_mb / 2) | default(512)) }}'
+    memory: '{{ proxmox_container_memory_mb  }}'
+    swap: '{{ proxmox_container_swap_mb }}'
     features:
       - nesting=1
     netif: '{{ lxc_interfaces | combine(proxmox_container_networking) }}'
     onboot: true
-    cores: '{{ proxmox_container_cpu_cores | default(1) }}'
+    cores: '{{ proxmox_container_cpu_cores }}'
     startup:
       - "order=350"
