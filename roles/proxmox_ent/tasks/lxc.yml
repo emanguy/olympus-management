@@ -1,6 +1,8 @@
 # Creates a proxmox LXC with preconfigured defaults to make creating them
 # less verbose.
 #
+# You must import the lxc.yml defaults along with these tasks.
+#
 # Parameters (required unless otherwise specified):
 # - proxmox_container_id: The numeric ID of the created LXC
 # - proxmox_container_hostname: The hostname of the created LXC
@@ -15,6 +17,8 @@
 
 - name: "LXC with ID {{ proxmox_container_id }}"
   community.proxmox.proxmox: '{{ lxc_defaults | combine(proxmox_container_extra_params) }}'
+  notify:
+    - Restart LXC
 
 - name: "Start LXC {{ proxmox_container_id }}"
   community.proxmox.proxmox:

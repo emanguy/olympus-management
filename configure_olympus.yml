@@ -18,4 +18,13 @@
       ansible.builtin.include_role:
         name: docker
         tasks_from: mealie
+
+- hosts: hass
+  roles:
+    - docker
+  tasks:
+    - name: Set up home assistant
+      ansible.builtin.include_role:
+        name: docker
+        tasks_from: home_assistant
         

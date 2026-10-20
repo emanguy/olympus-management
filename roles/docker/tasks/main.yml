@@ -1,0 +1,22 @@
+- name: Add docker repository
+  ansible.builtin.deb822_repository:
+    name: docker-engine
+    types: deb
+    enabled: true
+    architectures: amd64
+    components:
+      - stable
+    suites: '{{ ansible_facts["ansible_lsb"]["codename"] }}'
+    uris: https://download.docker.com/linux/ubuntu
+    signed_by: "{{ lookup('file', 'docker-pgp.txt') }}"
+
+- name: Install docker
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+      - docker-buildx-plugin
+      - docker-compose-plugin
+

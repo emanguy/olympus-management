@@ -1,0 +1,15 @@
+- name: "Create folder for home assistant"
+  ansible.builtin.file:
+    path: /root/homeassistant
+    state: directory
+
+- name: "Copy in mealie docker compose file"
+  ansible.builtin.template:
+    src: home_assistant/docker-compose.yml.j2
+    dest: /root/homeassistant/docker-compose.yml
+
+- name: "Start compose stack"
+  community.docker.docker_compose_v2:
+    project_src: /root/homeassistant
+    state: present
+

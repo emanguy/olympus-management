@@ -1,0 +1,7 @@
+- name: Restart LXC
+  when: proxmox_target_state == "started"
+  community.proxmox.proxmox:
+    vmid: '{{ proxmox_container_id }}'
+    node: olympus
+    state: restarted
+    
