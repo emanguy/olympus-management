@@ -1,3 +1,9 @@
+- name: Install required python deps
+  ansible.builtin.apt:
+    update_cache: true
+    name:
+      - python3-debian
+
 - name: Add docker repository
   ansible.builtin.deb822_repository:
     name: docker-engine
