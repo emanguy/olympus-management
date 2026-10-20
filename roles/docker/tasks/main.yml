@@ -6,7 +6,7 @@
     architectures: amd64
     components:
       - stable
-    suites: '{{ ansible_facts["ansible_lsb"]["codename"] }}'
+    suites: '{{ ansible_facts["lsb"]["codename"] }}'
     uris: https://download.docker.com/linux/ubuntu
     signed_by: "{{ lookup('file', 'docker-pgp.txt') }}"
 
