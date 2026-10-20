@@ -3,6 +3,55 @@ servers:
     hostname: auth.evanrittenhou.se
     internal_hostname: docker.olympuslan.local
     vm_port: 9000
+  dns:
+    hostname: dns.evanrittenhou.se
+    internal_hostname: 10.0.0.1
+    vm_port: 5380
+  directory:
+    hostname: directory.evanrittenhou.se
+    internal_hostname: directory.olympuslan.local
+    vm_port: 8080
+  jellyfin:
+    hostname: tv.evanrittenhou.se
+    internal_hostname: jellyfin.olympuslan.local
+    vm_port: 8096
+  foundry:
+    hostname: dnd-with.evanrittenhou.se
+    internal_hostname: foundryvtt.olympuslan.local
+    vm_port: 443
+  homeassistant:
+    hostname: home.evanrittenhou.se
+    internal_hostname: 192.168.1.4
+    vm_port: 8123
+  musicassistant:
+    hostname: music.evanrittenhou.se
+    internal_hostname: 192.168.1.4
+    vm_port: 8095
+  immich:
+    hostname: photos.evanrittenhou.se
+    internal_hostname: docker.olympuslan.local
+    vm_port: 2283
+  homelable:
+    hostname: monitoring.evanrittenhou.se
+    internal_hostname: homelable.olympuslan.local
+    vm_port: 3000
+  nextcloud:
+    hostname: files.evanrittenhou.se
+    internal_hostname: nextcloud.olympuslan.local
+  nextcloud_video:
+    hostname: video.evanrittenhou.se
+    internal_hostname: nextcloud.olympuslan.local
+    vm_port: 9100
+  collabora_code:
+    hostname: collabora.files.evanrittenhou.se
+    internal_hostname: nextcloud.olympuslan.local
+    vm_port: 9980
+  windmill:
+    hostname: windmill.files.evanrittenhou.se
+    internal_hostname: windmill.olympuslan.local
+    vm_port: 10000
+    vm_wss_port: 10001
+    manual_caddy_cfg: true
   mealie:
     hostname: recipes.evanrittenhou.se
     internal_hostname: docker.olympuslan.local
