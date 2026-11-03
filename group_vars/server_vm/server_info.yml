@@ -23,6 +23,7 @@ servers:
     hostname: home.evanrittenhou.se
     internal_hostname: 192.168.1.4
     vm_port: 8123
+    container_tag: 2026.10.4
   musicassistant:
     hostname: music.evanrittenhou.se
     internal_hostname: 192.168.1.4
@@ -56,6 +57,7 @@ servers:
     hostname: recipes.evanrittenhou.se
     internal_hostname: docker.olympuslan.local
     vm_port: 9925
+    container_tag: v3.28.0
     oidc_secret: !vault |
           $ANSIBLE_VAULT;1.1;AES256
           38346163636133373636323536363762646437376132346135343932396532323631623239666433
