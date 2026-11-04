@@ -23,7 +23,7 @@ servers:
     hostname: home.evanrittenhou.se
     internal_hostname: 192.168.1.4
     vm_port: 8123
-    container_tag: 2026.10.4
+    container_tag: "2026.11"
   musicassistant:
     hostname: music.evanrittenhou.se
     internal_hostname: 192.168.1.4
