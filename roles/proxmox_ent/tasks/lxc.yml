@@ -47,6 +47,7 @@
     headers:
       Cookie: 'PVEAuthCookie={{ proxmox_auth.json.data.ticket }}'
       CSRFPreventionToken: '{{ proxmox_auth.json.data.CSRFPreventionToken }}'
+    validate_certs: false
     body_format: "form-urlencoded"
     body:
       enable: '{{ "1" if proxmox_enable_firewall else "0" }}'
