@@ -83,10 +83,24 @@
       net2: "name=iot0,bridge=vmbr0,firewall=1,ip=dhcp,tag=3"
       net3: "name=priv0,bridge=vmbr0,firewall=1,ip=dhcp"
 
+- name: Configure Home Assistant firewall
+  community.proxmox.proxmox_firewall:
+    level: vm
+    vmid: 113
+    rules:
+      - comment: Accept traffic to home assistant port
+        action: ACCEPT
+        source: dc/internal-network
+        dport: '{{ servers.homeassistant.vm_port }}'
+        proto: tcp
+        
+
 - name: Write reverse proxy config to appropriate caddy disk
   ansible.builtin.template:
     src: Caddyfile.j2
-    dest: /main-storage/subvol-102-disk-1/Caddyfile.test
+    dest: /main-storage/subvol-102-disk-1/Caddyfile
     owner: "100000"
     group: "100000"
+  notify:
+    - Restart caddy
 

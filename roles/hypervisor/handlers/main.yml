@@ -2,3 +2,9 @@
   ansible.builtin.shell:
     chdir: /opt/backup
     cmd: resticprofile schedule
+
+- name: Restart caddy
+  community.proxmox.proxmox:
+    vmid: 102
+    node: olympus
+    state: restarted
