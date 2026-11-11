@@ -83,5 +83,10 @@
       net2: "name=iot0,bridge=vmbr0,firewall=1,ip=dhcp,tag=3"
       net3: "name=priv0,bridge=vmbr0,firewall=1,ip=dhcp"
 
-
+- name: Write reverse proxy config to appropriate caddy disk
+  ansible.builtin.template:
+    src: Caddyfile.j2
+    dest: /main-storage/subvol-102-disk-1/Caddyfile.test
+    owner: "100000"
+    group: "100000"
 

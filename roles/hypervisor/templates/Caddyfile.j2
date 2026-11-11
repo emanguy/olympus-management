@@ -1,0 +1,88 @@
+{#
+Caddyfile template for reverse proxy
+
+Parameters:
+- servers: Dict of server information for rendering
+  - (server_name): Unique key for the server
+    - hostname: External-facing hostname to match traffic on
+    - internal_hostname: Internal-network hostname to deliver traffic to
+    - vm_port (optional): The port to send traffic to
+    - no_generate_caddy (optional): Set to true to opt out of generating a reverse proxy route in the caddy config
+    - caddy (optional): Additional caddy directives for this server
+      - serve_http (optional): Set to true to serve over HTTP and avoid automatic cert generation
+      - reverse_proxy_proto (optional): The protocol to send reverse proxy traffic with (i.e. http or https)
+      - reverse_proxy_cfg (optional): Additional configuration for the generated reverse_proxy directive
+      - extra_cfg (optional): Additional configuration options to add to the generated route
+#}
+
+{
+  layer4 {
+    # TURNS port
+    :{{ servers.nextcloud_video_turns.port }} {
+      @video_traffic tls sni {{ servers.nextcloud_video_turns.hostname }}
+
+      route @video_traffic {
+        # TLS termination
+        tls
+        proxy {
+          upstream {{ servers.nextcloud_video_turns.internal_hostname }}:{{ servers.nextcloud_video_turns.vm_port }}
+        }
+      }
+    }
+  }
+}
+
+(https_cert) {
+  tls {
+    dns domainnameshop {{ dns_api.client_id }} {{ dns_api.client_secret }}
+    propagation_delay 60s
+  }
+}
+
+(log-traffic) {
+  log {
+    format console
+    hostnames {args[0]}
+    output file /var/log/caddy/caddy-{args[0]}.log
+  }
+}
+
+{% for _, server_cfg in servers | dictsort | selectattr("1.no_generate_caddy", "undefined") %}
+{%- if 'caddy' in server_cfg and 'serve_http' in server_cfg.caddy %}http://{% endif -%}
+{{ server_cfg.hostname }}{% if 'port' in server_cfg %}:{{ server_cfg.port }}{% endif %} {
+  reverse_proxy {% if 'caddy' in server_cfg and 'reverse_proxy_proto' in server_cfg.caddy -%}
+        {{ server_cfg.caddy.reverse_proxy_proto }}://
+      {%- endif -%}
+        {{ server_cfg.internal_hostname }}
+      {%- if 'vm_port' in server_cfg -%}
+        :{{ server_cfg.vm_port }}
+      {%- endif +%}
+  {%- if 'caddy' in server_cfg and 'reverse_proxy_cfg' in server_cfg.caddy %} {
+    {{ server_cfg.caddy.reverse_proxy_cfg | indent(4, false) | trim }}
+  }
+{% endif +%}
+  {%- if 'caddy' not in server_cfg or ( 'caddy' in server_cfg and 'serve_http' not in server_cfg.caddy ) +%}
+  import https_cert
+  {%- endif +%}
+  import log-traffic {{ server_cfg.hostname }}
+  {%- if 'caddy' in server_cfg and 'extra_cfg' in server_cfg.caddy +%}
+
+  {{ server_cfg.caddy.extra_cfg | indent(2, false) | trim }}
+  {%- endif +%}
+}
+
+{% endfor -%}
+
+{{ servers.windmill.hostname }} {
+  route {
+    reverse_proxy /ws/* /ws_mp/* /ws_debug/* http://{{ servers.windmill.internal_hostname }}:{{ servers.windmill.vm_wss_port }}
+    log_skip
+  }
+  route {
+    reverse_proxy /* http://{{ servers.windmill.internal_hostname }}:{{ servers.windmill.vm_port }}
+  }
+
+  import https_cert
+  import log-traffic {{ servers.windmill.hostname }}
+}
+

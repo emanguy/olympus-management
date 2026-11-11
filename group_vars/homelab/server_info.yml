@@ -1,11 +1,18 @@
+ip_addrs:
+  raspi: 192.168.1.4
+  dns_internal: 10.0.0.1
+
 servers:
   auth:
     hostname: auth.evanrittenhou.se
     internal_hostname: docker.olympuslan.local
     vm_port: 9000
+    caddy:
+      reverse_proxy_cfg: |
+        trusted_proxies {{ ip_addrs.raspi }}
   dns:
     hostname: dns.evanrittenhou.se
-    internal_hostname: 10.0.0.1
+    internal_hostname: '{{ ip_addrs.dns_internal }}'
     vm_port: 5380
   directory:
     hostname: directory.evanrittenhou.se
@@ -19,14 +26,20 @@ servers:
     hostname: dnd-with.evanrittenhou.se
     internal_hostname: foundryvtt.olympuslan.local
     vm_port: 443
-  homeassistant:
+  remote_homeassistant:
     hostname: home.evanrittenhou.se
-    internal_hostname: 192.168.1.4
+    internal_hostname: '{{ ip_addrs.raspi }}'
+    vm_port: 8123
+  homeassistant:
+    hostname: new-home.evanrittenhou.se
+    internal_hostname: hass.olympuslan.local
     vm_port: 8123
     container_tag: "2026.11"
+    caddy:
+      serve_http: true
   musicassistant:
     hostname: music.evanrittenhou.se
-    internal_hostname: 192.168.1.4
+    internal_hostname: '{{ ip_addrs.raspi }}'
     vm_port: 8095
   immich:
     hostname: photos.evanrittenhou.se
@@ -39,20 +52,50 @@ servers:
   nextcloud:
     hostname: files.evanrittenhou.se
     internal_hostname: nextcloud.olympuslan.local
+    caddy:
+      reverse_proxy_proto: https
+      reverse_proxy_cfg: |
+        transport http {
+          tls
+          tls_insecure_skip_verify
+        }
+      extra_cfg: |
+        redir /.well-known/carddav /remote.php/dav/ 301
+        redir /.well-known/caldav /remote.php/dav/ 301
   nextcloud_video:
     hostname: video.evanrittenhou.se
     internal_hostname: nextcloud.olympuslan.local
     vm_port: 9100
+    caddy:
+      reverse_proxy_proto: http
+      reverse_proxy_cfg: |
+        header_up X-Real-IP {remote_host}
+  nextcloud_video_turns:
+    hostname: video.evanrittenhou.se
+    internal_hostname: nextcloud.olympuslan.local
+    port: 5349
+    vm_port: 3478
+    no_generate_caddy: true
+  whiteboard:
+    hostname: whiteboard.files.evanrittenhou.se
+    internal_hostname: nextcloud.olympuslan.local
+    vm_port: 3002
   collabora_code:
     hostname: collabora.files.evanrittenhou.se
     internal_hostname: nextcloud.olympuslan.local
     vm_port: 9980
+    caddy:
+      reverse_proxy_cfg: |
+        transport http {
+          tls
+          tls_insecure_skip_verify
+        }
   windmill:
     hostname: windmill.files.evanrittenhou.se
     internal_hostname: windmill.olympuslan.local
     vm_port: 10000
     vm_wss_port: 10001
-    manual_caddy_cfg: true
+    no_generate_caddy: true
   mealie:
     hostname: recipes.evanrittenhou.se
     internal_hostname: docker.olympuslan.local
@@ -75,4 +118,5 @@ servers:
   postgres:
     internal_hostname: pg.olympuslan.local
     vm_port: 5432
+    no_generate_caddy: true
 

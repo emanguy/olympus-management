@@ -1,14 +1,17 @@
 - hosts: localhost
   connection: local
   tasks:
-    - name: Import necessary variables
+    - name: Import necessary variables (server info)
       ansible.builtin.include_vars:
-        file: ./group_vars/server_vm/postgres.yml
+        file: ./group_vars/homelab/server_info.yml
+    - name: Import necessary variables (secrets)
+      ansible.builtin.include_vars:
+        file: ./host_vars/olympus_local/secrets.yml
     - name: Create debug dir
       ansible.builtin.file:
         name: debug_output
         state: directory
     - name: Check template output
       ansible.builtin.template:
-        src: ./roles/postgres_db/templates/pg_hba.conf.j2
-        dest: ./debug_output/pg_hba.conf
+        src: ./roles/hypervisor/templates/Caddyfile.j2
+        dest: ./debug_output/Caddyfile
