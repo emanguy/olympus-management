@@ -89,6 +89,7 @@
     vmid: 113
     rules:
       - comment: Accept traffic to home assistant port
+        pos: 1
         action: ACCEPT
         source: dc/internal-network
         dport: '{{ servers.homeassistant.vm_port }}'
