@@ -96,6 +96,26 @@
         source: dc/internal-network
         dport: '{{ servers.homeassistant.vm_port }}'
         proto: tcp
+        log: nolog
+      - comment: Accept mdns traffic on private network
+        pos: 1
+        enable: true
+        type: in
+        action: ACCEPT
+        source: dc/home-network
+        dport: 5353
+        proto: udp
+        log: nolog
+      - comment: Accept mdns traffic on iot network
+        pos: 2
+        enable: true
+        type: in
+        action: ACCEPT
+        source: dc/home-iot-net
+        dport: 5353
+        proto: udp
+        log: nolog
+
         
 
 - name: Write reverse proxy config to appropriate caddy disk
