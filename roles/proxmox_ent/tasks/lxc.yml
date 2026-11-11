@@ -26,5 +26,29 @@
     node: olympus
     state: "{{ proxmox_target_state }}"
 
+- name: "Authenticate against proxmox API"
+  when: proxmox_target_state == "started"
+  ansible.builtin.uri:
+    url: 'https://{{ proxmox_api_host }}:8006/api2/json/access/ticket'
+    method: POST
+    body_format: "form-urlencoded"
+    body:
+      username: '{{ proxmox_user }}'
+      password: '{{ proxmox_api_password }}'
+    validate_certs: false
+    return_content: true
+  register: proxmox_auth
+
+- name: "Enable/disable master firewall on LXC {{ proxmox_container_id }}"
+  when: proxmox_target_state == "started"
+  ansible.builtin.uri:
+    url: 'https://{{ proxmox_api_host }}:8006/api2/json/nodes/olympus/lxc/{{ proxmox_container_id }}/firewall/options'
+    method: PUT
+    headers:
+      Cookie: 'PVEAuthCookie={{ proxmox_auth.json.data.ticket }}'
+      CSRFPreventionToken: '{{ proxmox_auth.json.data.CSRFPreventionToken }}'
+    body_format: "form-urlencoded"
+    body:
+      enable: '{{ "1" if proxmox_enable_firewall else "0" }}'
 
 

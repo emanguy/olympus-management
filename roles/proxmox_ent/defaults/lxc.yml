@@ -8,6 +8,7 @@ proxmox_container_memory_mb: 1024
 proxmox_container_swap_mb: '{{ proxmox_container_memory_mb / 2 }}'
 proxmox_container_cpu_cores: 1
 proxmox_target_state: started
+proxmox_enable_firewall: true
 
 lxc_defaults:
     vmid: "{{ proxmox_container_id }}"
