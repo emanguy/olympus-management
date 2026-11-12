@@ -26,17 +26,11 @@ servers:
     hostname: dnd-with.evanrittenhou.se
     internal_hostname: foundryvtt.olympuslan.local
     vm_port: 443
-  remote_homeassistant:
-    hostname: home.evanrittenhou.se
-    internal_hostname: '{{ ip_addrs.raspi }}'
-    vm_port: 8123
   homeassistant:
-    hostname: new-home.evanrittenhou.se
+    hostname: home.evanrittenhou.se
     internal_hostname: hass.olympuslan.local
     vm_port: 8123
     container_tag: "2026.11"
-    caddy:
-      serve_http: true
   musicassistant:
     hostname: music.evanrittenhou.se
     internal_hostname: '{{ ip_addrs.raspi }}'
