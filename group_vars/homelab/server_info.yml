@@ -30,7 +30,7 @@ servers:
     hostname: home.evanrittenhou.se
     internal_hostname: hass.olympuslan.local
     vm_port: 8123
-    container_tag: "2026.11"
+    container_tag: "2026.11.1"
   musicassistant:
     hostname: music.evanrittenhou.se
     internal_hostname: '{{ ip_addrs.raspi }}'
