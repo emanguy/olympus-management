@@ -49,15 +49,13 @@ servers:
     caddy:
       reverse_proxy_proto: https
       reverse_proxy_cfg: |
+        # Fix home assistant name for family calendar
+        uri replace Family%2B%28Google%2BCalendar%2Bimport%29 Family+%2528Google+Calendar+import%2529 1
         transport http {
           tls
           tls_insecure_skip_verify
         }
       extra_cfg: |
-        # Adjust home assistant WebDAV calendar URL
-        redir /remote.php/dav/calendars/2efa9aed9a9c469e64c978c5997ca2ccfa2a3fd149a1c0c9428ec9adc973189c/Family%2B%28Google%2BCalendar%2Bimport%29/ /remote.php/dav/calendars/2efa9aed9a9c469e64c978c5997ca2ccfa2a3fd149a1c0c9428ec9adc973189c/Family+%2528Google+Calendar+import%2529/ 301
-
-        # Normal DAV endpoints
         redir /.well-known/carddav /remote.php/dav/ 301
         redir /.well-known/caldav /remote.php/dav/ 301
   nextcloud_video:
