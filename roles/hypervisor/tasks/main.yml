@@ -46,7 +46,7 @@
       - resticprofile
 
 - name: Copy in ZFS deduplication tool
-  ansible.builtin.file:
+  ansible.builtin.copy:
     src: zfs-dedup
     dest: /usr/bin/zfs-dedup
     owner: root
