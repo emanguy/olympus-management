@@ -45,6 +45,14 @@
       - rclone
       - resticprofile
 
+- name: Copy in ZFS deduplication tool
+  ansible.builtin.file:
+    src: zfs-dedup
+    dest: /usr/bin/zfs-dedup
+    owner: root
+    group: root
+    mode: "700"
+
 ####### Set up automated backups ########
 
 - name: Create directory for restic config
